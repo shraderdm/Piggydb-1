@@ -13,9 +13,9 @@ import marubinotto.piggydb.ui.page.common.DatabaseSpecificBeans;
 import marubinotto.util.RdbUtils;
 import marubinotto.util.procedure.Procedure;
 import marubinotto.util.web.WebUtils;
-import net.sf.click.control.FileField;
-import net.sf.click.control.Form;
-import net.sf.click.control.Submit;
+import org.apache.click.control.FileField;
+import org.apache.click.control.Form;
+import org.apache.click.control.Submit;
 
 import org.apache.commons.fileupload.FileItem;
 import org.dbunit.DatabaseUnitException;

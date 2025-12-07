@@ -267,7 +267,7 @@ public class XmlTreeImpl implements XmlTree {
     private XPath getXPath(String xpath) throws JaxenException {
         XPath result = xpathCache.get(xpath);
         if (result == null) {
-            result = new DOMXPath(xpath);
+            result = (XPath) new DOMXPath(xpath);
             result.setNamespaceContext(namespaceContext);
             xpathCache.put(xpath, result);
         }

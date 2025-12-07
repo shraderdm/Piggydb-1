@@ -93,7 +93,7 @@ public class ExtensionDeployer {
 		ServletContext servletContext,
 		ApplicationContext appContext) 
 	throws Exception {
-		String className = IOUtils.toString(defFile).trim();
+		String className = IOUtils.toString(defFile.openStream(), java.nio.charset.StandardCharsets.UTF_8).trim();
 		logger.info("Initializing extension: " + className);
 		Extension extension = (Extension)Class.forName(className).newInstance();
 		extension.init(servletContext, appContext);

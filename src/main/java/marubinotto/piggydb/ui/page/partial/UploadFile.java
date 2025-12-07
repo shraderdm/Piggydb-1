@@ -7,7 +7,7 @@ import marubinotto.piggydb.model.entity.RawFragment;
 import marubinotto.piggydb.ui.page.common.PageImports;
 import marubinotto.util.Size;
 import marubinotto.util.message.CodedException;
-import net.sf.click.util.ClickUtils;
+import org.apache.click.util.ClickUtils;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;

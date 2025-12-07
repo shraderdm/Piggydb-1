@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.click.ClickServlet;
-import net.sf.click.Context;
+import org.apache.click.ClickServlet;
+import org.apache.click.Context;
 
 public class ModifiedClickContext extends Context {
 

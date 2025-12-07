@@ -23,7 +23,7 @@ import marubinotto.util.Assert;
 import marubinotto.util.PasswordDigest;
 import marubinotto.util.Size;
 import marubinotto.util.message.CodedException;
-import net.sf.click.util.ClickUtils;
+import org.apache.click.util.ClickUtils;
 
 import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.fileupload.FileItem;

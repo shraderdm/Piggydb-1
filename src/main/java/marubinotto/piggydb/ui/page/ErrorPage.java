@@ -13,7 +13,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ErrorPage extends net.sf.click.util.ErrorPage {
+public class ErrorPage extends org.apache.click.util.ErrorPage {
 
 	private static Log logger = LogFactory.getLog(ErrorPage.class);
 
