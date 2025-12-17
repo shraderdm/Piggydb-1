@@ -2,8 +2,8 @@ package marubinotto.piggydb.ui.page.control.form;
 
 import org.apache.commons.lang.UnhandledException;
 
-import net.sf.click.control.Field;
-import net.sf.click.control.Form;
+import org.apache.click.control.Field;
+import org.apache.click.control.Form;
 
 public class PublicFieldForm extends Form {
 

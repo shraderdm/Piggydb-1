@@ -12,9 +12,9 @@ import marubinotto.piggydb.impl.db.SequenceAdjusterList;
 import marubinotto.piggydb.ui.util.ModifiedClickContext;
 import marubinotto.util.procedure.Procedure;
 import marubinotto.util.procedure.Transaction;
-import net.sf.click.Context;
-import net.sf.click.extras.spring.SpringClickServlet;
-import net.sf.click.util.ClickLogger;
+import org.apache.click.Context;
+import org.apache.click.extras.spring.SpringClickServlet;
+import org.apache.click.util.ClickLogger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

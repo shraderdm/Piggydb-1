@@ -103,9 +103,9 @@ implements RawEntityFactory<RawFragment> {
 	}
 
 	public boolean containsId(Long id) throws Exception {
-		return this.jdbcTemplate.queryForInt(
+		return this.jdbcTemplate.queryForObject(
 	    "select count(*) from fragment where fragment_id = ?", 
-	    new Object[]{id}) > 0;
+	    Integer.class, new Object[]{id}) > 0;
 	}
 
 	public long register(Fragment fragment) throws Exception {
