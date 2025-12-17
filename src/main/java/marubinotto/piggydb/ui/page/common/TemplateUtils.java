@@ -10,7 +10,7 @@ import marubinotto.util.RegexUtils;
 import marubinotto.util.ThreadLocalCache;
 import marubinotto.util.RegexUtils.MatchProcessor;
 import marubinotto.util.velocity.InescapableWrapper;
-import org.apache.click.util.MessagesMap;
+import net.sf.click.util.MessagesMap;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.lang.StringEscapeUtils;

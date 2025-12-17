@@ -2,12 +2,12 @@ package marubinotto.piggydb.ui.page;
 
 import marubinotto.piggydb.model.auth.User;
 import marubinotto.piggydb.ui.page.common.AbstractBorderPage;
-import org.apache.click.control.Checkbox;
-import org.apache.click.control.Form;
-import org.apache.click.control.HiddenField;
-import org.apache.click.control.PasswordField;
-import org.apache.click.control.Submit;
-import org.apache.click.control.TextField;
+import net.sf.click.control.Checkbox;
+import net.sf.click.control.Form;
+import net.sf.click.control.HiddenField;
+import net.sf.click.control.PasswordField;
+import net.sf.click.control.Submit;
+import net.sf.click.control.TextField;
 
 import org.apache.commons.lang.StringUtils;
 

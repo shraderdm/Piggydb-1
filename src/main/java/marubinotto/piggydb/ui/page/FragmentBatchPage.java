@@ -19,11 +19,11 @@ import marubinotto.piggydb.ui.page.control.form.SingleTagForm;
 import marubinotto.piggydb.ui.page.model.SelectedFragments;
 import marubinotto.util.paging.Page;
 import marubinotto.util.procedure.Procedure;
-import org.apache.click.control.Form;
-import org.apache.click.control.HiddenField;
-import org.apache.click.control.Submit;
-import org.apache.click.control.TextField;
-import org.apache.click.extras.tree.Tree;
+import net.sf.click.control.Form;
+import net.sf.click.control.HiddenField;
+import net.sf.click.control.Submit;
+import net.sf.click.control.TextField;
+import net.sf.click.extras.tree.Tree;
 
 import org.apache.commons.lang.StringUtils;
 

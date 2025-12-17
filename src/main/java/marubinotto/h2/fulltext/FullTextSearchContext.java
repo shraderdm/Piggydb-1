@@ -15,16 +15,15 @@ import marubinotto.util.Assert;
 
 import org.apache.commons.lang.UnhandledException;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.util.Version;
-// import org.h2.util.New; // Removed
-import org.h2.util.SoftHashMap; // Assuming this still exists or replacing it?
+import org.h2.util.New;
+import org.h2.util.SoftHashMap;
 
 public class FullTextSearchContext {
 	
-	private static final Map<String, FullTextSearchContext> CONTEXTS = new HashMap<>();
+	private static final Map<String, FullTextSearchContext> CONTEXTS = New.hashMap();
 	
 	public static FullTextSearchContext getContext(Connection conn) throws SQLException {
         String path = getIndexPath(conn);
@@ -36,8 +35,8 @@ public class FullTextSearchContext {
         return context;
     }
     	
-	private HashMap<String, Integer> words = new HashMap<>();
-	private HashMap<Integer, IndexedTableInfo> indexedTables = new HashMap<>();
+	private HashMap<String, Integer> words = New.hashMap();
+	private HashMap<Integer, IndexedTableInfo> indexedTables = New.hashMap();
 
 	private FullTextSearchContext() {
 	}
@@ -72,26 +71,21 @@ public class FullTextSearchContext {
         return word;
     }
     
-    private final static Analyzer ANALYZER = new CJKAnalyzer(Version.LUCENE_36);
+    private final static Analyzer ANALYZER = new CJKAnalyzer();
 
     public void splitIntoWords(String text, Set<String> words) {
     	TokenStream stream = ANALYZER.tokenStream("F", new StringReader(text));
+    	Token token = new Token();
         try {
-            stream.reset();
-            CharTermAttribute termAttr = stream.addAttribute(CharTermAttribute.class);
-			while (stream.incrementToken()) {
-				String word = termAttr.toString();
+			while ((token = stream.next(token)) != null) {
+				String word = token.term();
 				word = convertWord(word);
 	            if (word != null) words.add(word);
 			}
-            stream.end();
 		} 
         catch (IOException e) {
 			throw new UnhandledException(e);
 		}
-        finally {
-            try { stream.close(); } catch (IOException e) { /* ignore */ }
-        }
     }
     
     public void splitIntoWords(IndexedTableInfo tableInfo, Object[] row, Set<String> words) 
@@ -105,21 +99,13 @@ public class FullTextSearchContext {
         }
     }
     
-    // Using simple HashMap if SoftHashMap is gone, or check if H2 has it.
-    // Assuming SoftHashMap might be gone (it's internal).
-    // I will replace with HashMap for now, assuming memory is fine or use WeakHashMap.
-    // PreparedStatement cache is useful but not critical.
-    protected Map<Connection, Map<String, PreparedStatement>> cache =
-	new java.util.WeakHashMap<>(); // Use WeakHashMap to allow GC of connections
+    protected SoftHashMap<Connection, SoftHashMap<String, PreparedStatement>> cache = 
+    	new SoftHashMap<Connection, SoftHashMap<String, PreparedStatement>>();
 
     protected synchronized PreparedStatement prepare(Connection conn, String sql) throws SQLException {
-        Map<String, PreparedStatement> preps = cache.get(conn);
+        SoftHashMap<String, PreparedStatement> preps = cache.get(conn);
         if (preps == null) {
-            preps = new HashMap<>(); // Strong ref inside WeakHashMap value? No, value is strong.
-            // WeakHashMap keys are weak. If connection is closed/GCed, entry removed.
-            // But we need to close statements?
-            // H2 internal SoftHashMap was doing something specific.
-            // I'll stick to simple caching for now.
+            preps = new SoftHashMap<String, PreparedStatement>();
             this.cache.put(conn, preps);
         }
         PreparedStatement prep = preps.get(sql);

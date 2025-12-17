@@ -14,7 +14,7 @@ import marubinotto.util.Assert;
 import marubinotto.util.message.MessageCode;
 import marubinotto.util.web.WebMessageSource;
 import marubinotto.util.web.WebUtils;
-import org.apache.click.Page;
+import net.sf.click.Page;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.lang.ArrayUtils;

@@ -19,7 +19,7 @@ import marubinotto.piggydb.ui.page.model.RecentlyViewed;
 import marubinotto.piggydb.ui.page.model.RecentlyViewed.Entity;
 import marubinotto.util.paging.Page;
 import marubinotto.util.paging.PageUtils;
-import org.apache.click.control.PageLink;
+import net.sf.click.control.PageLink;
 
 public abstract class AbstractBorderPage extends AbstractMainUiHtml {
 

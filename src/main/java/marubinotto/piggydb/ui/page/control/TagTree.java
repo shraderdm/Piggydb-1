@@ -14,11 +14,11 @@ import marubinotto.piggydb.ui.page.common.HtmlFragments;
 import marubinotto.piggydb.ui.page.common.WebResourcePaths;
 import marubinotto.util.Assert;
 import marubinotto.util.web.WebUtils;
-import org.apache.click.Context;
-import org.apache.click.control.Decorator;
-import org.apache.click.extras.tree.Tree;
-import org.apache.click.extras.tree.TreeNode;
-import org.apache.click.util.HtmlStringBuffer;
+import net.sf.click.Context;
+import net.sf.click.control.Decorator;
+import net.sf.click.extras.tree.Tree;
+import net.sf.click.extras.tree.TreeNode;
+import net.sf.click.util.HtmlStringBuffer;
 
 public class TagTree extends Tree {
 

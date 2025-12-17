@@ -6,9 +6,9 @@ import marubinotto.piggydb.model.auth.Password;
 import marubinotto.piggydb.model.enums.Role;
 import marubinotto.piggydb.ui.page.common.AbstractBorderPage;
 import marubinotto.piggydb.ui.page.common.AbstractFragmentsPage;
-import org.apache.click.control.Form;
-import org.apache.click.control.PasswordField;
-import org.apache.click.control.Submit;
+import net.sf.click.control.Form;
+import net.sf.click.control.PasswordField;
+import net.sf.click.control.Submit;
 
 public class PasswordPage extends AbstractBorderPage {
 

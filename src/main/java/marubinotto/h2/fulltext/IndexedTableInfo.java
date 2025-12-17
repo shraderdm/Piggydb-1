@@ -8,11 +8,13 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import marubinotto.util.Assert;
 
+import org.h2.util.JdbcUtils;
+import org.h2.util.New;
+import org.h2.util.StatementBuilder;
 import org.h2.util.StringUtils;
 
 /**
@@ -76,19 +78,22 @@ public class IndexedTableInfo {
 		
 		// column names and types
         DatabaseMetaData meta = conn.getMetaData();
-        // H2 1.4: wildcards in meta data calls are usually allowed, escaping might not be needed if name is clean.
-        // Assuming names don't contain wildcards for now or just passing as is.
-        ResultSet rs = meta.getColumns(null, schemaName, tableName, null);
-        info.columns = new ArrayList<>();
-        info.columnTypes = new ArrayList<>();
+        ResultSet rs = meta.getColumns(null,
+            JdbcUtils.escapeMetaDataPattern(schemaName),
+            JdbcUtils.escapeMetaDataPattern(tableName),
+            null);
+        info.columns = New.arrayList();
+        info.columnTypes = New.arrayList();
         while (rs.next()) {
         	info.columns.add(rs.getString("COLUMN_NAME"));
         	info.columnTypes.add(rs.getInt("DATA_TYPE"));
         }
         
         // primary keys
-        List<String> keyNames = new ArrayList<>();
-        rs = meta.getPrimaryKeys(null, schemaName, tableName);
+        List<String> keyNames = New.arrayList();
+        rs = meta.getPrimaryKeys(null,
+            JdbcUtils.escapeMetaDataPattern(schemaName),
+            tableName);
 	    while (rs.next()) {
 	    	keyNames.add(rs.getString("COLUMN_NAME"));
 	    }
@@ -98,7 +103,7 @@ public class IndexedTableInfo {
 	    info.keys = info.toColumnIndexes(keyNames);
 	    
 	    // indexed columns
-	    List<String> indexNames = new ArrayList<>();
+	    List<String> indexNames = New.arrayList();
         PreparedStatement prep = conn.prepareStatement(
         	"SELECT ID, COLUMNS FROM " + FullTextSearch.SCHEMA + ".INDEXES WHERE SCHEMA=? AND TABLE=?");
         prep.setString(1, schemaName);
@@ -123,7 +128,7 @@ public class IndexedTableInfo {
 	private List<Integer> toColumnIndexes(List<String> names) throws SQLException {
 		Assert.Property.requireNotNull(columns, "columns");
 		
-		List<Integer> indexes = new ArrayList<>();
+		List<Integer> indexes = New.arrayList();
 		for (String name : names) {
 			int index = this.columns.indexOf(name);
 			if (index < 0) throw throwException("Column not found: " + name);
@@ -150,11 +155,9 @@ public class IndexedTableInfo {
     }
     
     public String createConditionSqlWithKeys(Object[] row) throws SQLException {
-		StringBuilder buff = new StringBuilder();
+		StatementBuilder buff = new StatementBuilder();
         for (int columnIndex : this.keys) {
-            if (buff.length() > 0) {
-                buff.append(" AND ");
-            }
+            buff.appendExceptFirst(" AND ");
             buff.append(StringUtils.quoteIdentifier(this.columns.get(columnIndex)));
             Object value = row[columnIndex];
             if (value == null) {

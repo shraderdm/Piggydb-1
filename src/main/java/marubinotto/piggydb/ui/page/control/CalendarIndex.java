@@ -10,7 +10,7 @@ import marubinotto.util.Assert;
 import marubinotto.util.time.DateTime;
 import marubinotto.util.time.Month;
 import marubinotto.util.time.TimeVisitors.DayOfMonthVisitor;
-import org.apache.click.control.PageLink;
+import net.sf.click.control.PageLink;
 
 public class CalendarIndex implements DayOfMonthVisitor {
 

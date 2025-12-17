@@ -1,12 +1,12 @@
 package marubinotto.piggydb.ui.page.control.form;
 
 import marubinotto.util.Assert;
-import org.apache.click.Page;
-import org.apache.click.control.Form;
-import org.apache.click.control.HiddenField;
-import org.apache.click.control.ImageSubmit;
-import org.apache.click.control.Submit;
-import org.apache.click.control.TextField;
+import net.sf.click.Page;
+import net.sf.click.control.Form;
+import net.sf.click.control.HiddenField;
+import net.sf.click.control.ImageSubmit;
+import net.sf.click.control.Submit;
+import net.sf.click.control.TextField;
 
 public class SingleTagForm extends Form {
 	
