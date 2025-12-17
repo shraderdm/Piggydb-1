@@ -84,8 +84,8 @@ implements RawEntityFactory<RawFilter> {
 	private boolean containsName(String name) throws Exception {
 		Assert.Arg.notNull(name, "name");
 
-		return this.jdbcTemplate.queryForObject(
-			"select count(*) from filter where filter_name = ?", Integer.class, new Object[]{name}) > 0;
+		return this.jdbcTemplate.queryForInt(
+			"select count(*) from filter where filter_name = ?", new Object[]{name}) > 0;
 	}
 
 	public Filter get(long id) throws Exception {
@@ -101,8 +101,8 @@ implements RawEntityFactory<RawFilter> {
 
 	private RawFilter queryForOneFilter(String sql, Object[] args) {
 		try {
-			return (RawFilter) this.jdbcTemplate.queryForObject(sql,
-				filterRowMapper, args);
+			return (RawFilter) this.jdbcTemplate.queryForObject(sql, args,
+				filterRowMapper);
 		}
 		catch (EmptyResultDataAccessException e) {
 			return null;
@@ -195,17 +195,17 @@ implements RawEntityFactory<RawFilter> {
 	}
 
 	private boolean containsId(Long id) throws Exception {
-		return this.jdbcTemplate.queryForObject(
-			"select count(*) from filter where filter_id = ?", Integer.class, new Object[]{id}) > 0;
+		return this.jdbcTemplate.queryForInt(
+			"select count(*) from filter where filter_id = ?", new Object[]{id}) > 0;
 	}
 
 	private void checkIfNameIsValidToUpdate(Filter filter) throws DuplicateException {
-		Integer duplicate = this.jdbcTemplate.queryForObject(
+		int duplicate = this.jdbcTemplate.queryForInt(
 			"select count(*) from filter where filter_id <> ? and filter_name = ?", 
-			Integer.class, new Object[]{
+			new Object[]{
 				filter.getId(), 
 				filter.getName()});
-		if (duplicate != null && duplicate > 0) throwDuplicateException();
+		if (duplicate > 0) throwDuplicateException();
 	}
 
 	@SuppressWarnings("unchecked")

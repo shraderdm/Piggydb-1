@@ -20,8 +20,8 @@ import marubinotto.piggydb.ui.page.model.SelectedFragments;
 import marubinotto.piggydb.ui.page.partial.AbstractFragments;
 import marubinotto.util.message.CodedException;
 import marubinotto.util.procedure.Procedure;
-import org.apache.click.Context;
-import org.apache.click.control.HiddenField;
+import net.sf.click.Context;
+import net.sf.click.control.HiddenField;
 
 import org.apache.commons.lang.StringUtils;
 

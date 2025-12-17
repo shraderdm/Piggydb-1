@@ -77,7 +77,7 @@ public class H2TagRepository extends TagRepository.Base {
 			if (containsName(tag.getName())) throwDuplicateException();
 		}
 		else {
-			int duplicate = this.jdbcTemplate.queryForObject(
+			int duplicate = this.jdbcTemplate.queryForInt(
 				"select count(*) from tag where tag_id <> ? and tag_name = ?",
 				new Object[]{tag.getId(), tag.getName()});
 			if (duplicate > 0) throwDuplicateException();
@@ -116,7 +116,7 @@ public class H2TagRepository extends TagRepository.Base {
 
 	private RawTag queryForOneTag(String sql, Object[] args) {
 		try {
-			return (RawTag)this.jdbcTemplate.queryForObject(sql, tagRowMapper, args);
+			return (RawTag)this.jdbcTemplate.queryForObject(sql, args, tagRowMapper);
 		}
 		catch (EmptyResultDataAccessException e) {
 			return null;
@@ -129,17 +129,15 @@ public class H2TagRepository extends TagRepository.Base {
 	}
 	
 	public boolean containsId(Long id) throws Exception {
-		Integer result = this.jdbcTemplate.queryForObject(
-			"select count(*) from tag where tag_id = ?", Integer.class, new Object[]{id});
-		return result != null && result > 0;
+		return this.jdbcTemplate.queryForInt(
+			"select count(*) from tag where tag_id = ?", new Object[]{id}) > 0;
 	}
 
 	public boolean containsName(String name) throws Exception {
 		Assert.Arg.notNull(name, "name");
 
-		Integer result = this.jdbcTemplate.queryForObject(
-			"select count(*) from tag where tag_name = ?", Integer.class, new Object[]{name});
-		return result != null && result > 0;
+		return this.jdbcTemplate.queryForInt(
+			"select count(*) from tag where tag_name = ?", new Object[]{name}) > 0;
 	}
 	
 	public Long getIdByName(String tagName) {
